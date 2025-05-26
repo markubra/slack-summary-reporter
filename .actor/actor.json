@@ -1,0 +1,74 @@
+{
+    "actorSpecification": 1,
+    "name": "slack-summary-reporter",
+    "version": "0.0.1",
+    "title": "Slack Summary Reporter",
+    "description": "Fetches recent Slack messages, summarizes them via OpenAI, and posts back to Slack.",
+    "input": {
+      "type": "object",
+      "properties": {
+        "summaryDays": {
+          "title": "How many days back to fetch messages",
+          "type": "integer",
+          "description": "Number of days of Slack history to include in the summary",
+          "default": 1
+        },
+        "summaryPromptTemplate": {
+          "title": "Summarization Prompt",
+          "type": "string",
+          "description": "Override the default summarization instruction",
+          "default": "Summarize the following Slack messages.",
+          "isSecret": false
+        },
+        "maxChunkTokens": {
+          "title": "Max Chunk Tokens",
+          "type": "integer",
+          "description": "Maximum number of tokens per chunk when sending to OpenAI",
+          "default": 20000
+        },
+        "slackTokenFetch": {
+          "title": "Slack Token (read)",
+          "type": "string",
+          "description": "Bot or user token with conversations.history scope",
+          "isSecret": true
+        },
+        "slackChannelFetch": {
+          "title": "Slack Channel ID (read)",
+          "type": "string",
+          "description": "ID of the channel to fetch messages from (e.g. C0123456789)"
+        },
+        "slackTokenPost": {
+          "title": "Slack Token (post)",
+          "type": "string",
+          "description": "Bot or user token with chat:write scope",
+          "isSecret": true
+        },
+        "slackChannelPost": {
+          "title": "Slack Channel ID (post)",
+          "type": "string",
+          "description": "ID of the channel to post the summary to (e.g. C9876543210)"
+        },
+        "openaiApiKey": {
+          "title": "OpenAI API Key",
+          "type": "string",
+          "description": "Your OpenAI API key",
+          "isSecret": true
+        },
+        "openaiModel": {
+          "title": "OpenAI Model",
+          "type": "string",
+          "description": "Which OpenAI model to use",
+          "default": "gpt-4o-mini"
+        }
+      },
+      "required": [
+        "summaryDays",
+        "slackTokenFetch",
+        "slackChannelFetch",
+        "slackTokenPost",
+        "slackChannelPost",
+        "openaiApiKey"
+      ]
+    }
+  }
+  
